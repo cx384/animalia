@@ -1,6 +1,17 @@
 ---------
 -- Pig --
 ---------
+local follows = {}
+
+minetest.register_on_mods_loaded(function()
+	for name in pairs(minetest.registered_items) do
+		if (name:match(":wheat")
+		or minetest.get_item_group(name, "food_wheat") > 0)
+		and not name:find("seed") then
+			table.insert(follows, name)
+		end
+	end
+end)
 
 creatura.register_mob("animalia:pig", {
 	-- Engine Props
@@ -56,10 +67,11 @@ creatura.register_mob("animalia:pig", {
 		walk = {range = {x = 70, y = 89}, speed = 30, frame_blend = 0.3, loop = true},
 		run = {range = {x = 100, y = 119}, speed = 40, frame_blend = 0.3, loop = true},
 	},
-	follow = animalia.food_crops,
+	follow = follows,
 	drops = {
 		{name = "animalia:porkchop_raw", min = 1, max = 3, chance = 1}
 	},
+	fancy_collide = true,
 
 	-- Animalia Props
 	flee_puncher = true,

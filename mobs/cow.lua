@@ -4,6 +4,17 @@
 
 local random = math.random
 
+local follows = {}
+
+minetest.register_on_mods_loaded(function()
+	for name in pairs(minetest.registered_items) do
+		if (name:match(":wheat")
+		or minetest.get_item_group(name, "food_wheat") > 0)
+		and not name:find("seed") then
+			table.insert(follows, name)
+		end
+	end
+end)
 
 creatura.register_mob("animalia:cow", {
 	-- Engine Props
@@ -68,12 +79,12 @@ creatura.register_mob("animalia:cow", {
 		walk = {range = {x = 71, y = 89}, speed = 20, frame_blend = 0.3, loop = true},
 		run = {range = {x = 71, y = 89}, speed = 30, frame_blend = 0.3, loop = true},
 	},
-	follow = animalia.food_wheat,
+	follow = follows,
 	drops = {
 		{name = "animalia:beef_raw", min = 1, max = 3, chance = 1},
 		{name = "animalia:leather", min = 1, max = 3, chance = 2}
 	},
-	fancy_collide = false,
+	fancy_collide = true,
 
 	-- Animalia Props
 	flee_puncher = true,
