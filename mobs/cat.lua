@@ -101,6 +101,8 @@ creatura.register_mob("animalia:cat", {
 	follow = follow,
 	drops = {},
 
+	fancy_collide = true,
+
 	-- Animalia Props
 	flee_puncher = true,
 	catch_with_net = true,

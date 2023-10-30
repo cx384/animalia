@@ -76,6 +76,7 @@ creatura.register_mob("animalia:fox", {
 		"animalia:porkchop_raw",
 		"animalia:poultry_raw"
 	},
+	fancy_collide = true,
 
 	-- Animalia Props
 	skittish_wander = true,

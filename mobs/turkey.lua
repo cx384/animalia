@@ -2,6 +2,18 @@
 -- Turkey --
 ------------
 
+local follows = {}
+
+minetest.register_on_mods_loaded(function()
+	for name in pairs(minetest.registered_items) do
+		if (name:match(":seed")
+		or minetest.get_item_group(name, "food_seed") > 0)
+		and not name:find("cotton") then
+			table.insert(follows, name)
+		end
+	end
+end)
+
 creatura.register_mob("animalia:turkey", {
 	-- Engine Props
 	visual_size = {x = 10, y = 10},
@@ -48,11 +60,12 @@ creatura.register_mob("animalia:turkey", {
 		run = {range = {x = 40, y = 60}, speed = 45, frame_blend = 0.3, loop = true},
 		fall = {range = {x = 70, y = 90}, speed = 30, frame_blend = 0.3, loop = true},
 	},
-	follow = animalia.food_seeds,
+	follow = follows,
 	drops = {
 		{name = "animalia:poultry_raw", min = 1, max = 4, chance = 1},
 		{name = "animalia:feather", min = 1, max = 3, chance = 2}
 	},
+	fancy_collide = true,
 
 	-- Animalia Props
 	group_wander = true,
